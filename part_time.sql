@@ -1,24 +1,25 @@
 --
 -- Database: `part_time`
 --
- CREATE DATABASE part_time;
- USE part_time;
+ Create database part_time;
+ use part_time;
 -- --------------------------------------------------------
 
 --
 -- 表的结构 `pt_admin`
 --
 
-CREATE TABLE IF NOT EXISTS `pt_admin` (
-  `AdminID` int(11) NOT NULL AUTO_INCREMENT,
-  `PassWord` varchar(20) NOT NULL,
-  `Email` varchar(100) NOT NULL,
-  `AdminName` varchar(100) NOT NULL,
-  `Sex` varchar(20) DEFAULT NULL,
-  `Telephone` varchar(20) DEFAULT NULL,
-  `AdminNumber` int(11) NOT NULL,
-  PRIMARY KEY (`AdminID`),
-  UNIQUE KEY `Email` (`Email`)
+Create table IF NOT exists `pt_admin` (
+  `adminID` int(11) NOT NULL AUTO_INCREMENT,
+  `password` varchar(20) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `adminName` varchar(100) NOT NULL,
+  `sex` varchar(20) DEFAULT NULL,
+  `telephone` varchar(20) DEFAULT NULL,
+  `adminNumber` int(11) NOT NULL,
+  `adminImage` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`adminID`),
+  UNIQUE KEY `email` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -27,11 +28,11 @@ CREATE TABLE IF NOT EXISTS `pt_admin` (
 -- 表的结构 `pt_category`
 --
 
-CREATE TABLE IF NOT EXISTS `pt_category` (
-  `CategoryID` int(11) NOT NULL AUTO_INCREMENT,
-  `CategoryName` varchar(100) NOT NULL,
-  `Description` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`CategoryID`)
+Create table IF NOT exists `pt_category` (
+  `categoryID` int(11) NOT NULL AUTO_INCREMENT,
+  `categoryName` varchar(100) NOT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`categoryID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -40,17 +41,18 @@ CREATE TABLE IF NOT EXISTS `pt_category` (
 -- 表的结构 `pt_company`
 --
 
-CREATE TABLE IF NOT EXISTS `pt_company` (
-  `CompanyID` int(11) NOT NULL AUTO_INCREMENT,
-  `PassWord` varchar(20) NOT NULL,
-  `Email` varchar(100) NOT NULL,
-  `CompanyName` varchar(100) NOT NULL,
-  `Address` varchar(255) DEFAULT NULL,
-  `Telephone` varchar(20) DEFAULT NULL,
-  `CompanyNumber` int(11) NOT NULL,
-  `InfoID` int(11) DEFAULT NULL,
-  PRIMARY KEY (`CompanyID`),
-  UNIQUE KEY `Email` (`Email`)
+Create table IF NOT exists `pt_company` (
+  `companyID` int(11) NOT NULL AUTO_INCREMENT,
+  `password` varchar(20) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `companyName` varchar(100) NOT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `telephone` varchar(20) DEFAULT NULL,
+  `companyNumber` int(11) NOT NULL,
+  `companyImage` varchar(255) DEFAULT NULL,
+  `infoID` int(11) DEFAULT NULL,
+  PRIMARY KEY (`companyID`),
+  UNIQUE KEY `email` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -59,32 +61,33 @@ CREATE TABLE IF NOT EXISTS `pt_company` (
 -- 表的结构 `pt_information`
 --
 
-CREATE TABLE IF NOT EXISTS `pt_information` (
-  `InfoID` int(11) NOT NULL AUTO_INCREMENT,
-  `Author` varchar(50) NOT NULL,
-  `Title` varchar(100) NOT NULL,
-  `Content` varchar(255) DEFAULT NULL,
-  `PublishTime` varchar(50) DEFAULT NULL,
-  `ConfirmTime` varchar(50) DEFAULT NULL,
-  `CategoryID` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`InfoID`)
+Create table IF NOT exists `pt_information` (
+  `infoID` int(11) NOT NULL AUTO_INCREMENT,
+  `author` varchar(50) NOT NULL,
+  `title` varchar(100) NOT NULL,
+  `content` varchar(255) DEFAULT NULL,
+  `publishtime` varchar(50) DEFAULT NULL,
+  `confirmtime` varchar(50) DEFAULT NULL,
+  `categoryID` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`infoID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
+
 
 --
 -- 表的结构 `pt_resume`
 --
 
-CREATE TABLE IF NOT EXISTS `pt_resume` (
-  `ResumeID` int(11) NOT NULL AUTO_INCREMENT,
-  `Name` varchar(50) NOT NULL,
-  `Sex` varchar(20) DEFAULT NULL,
-  `Image` varchar(255) DEFAULT NULL,
-  `Age` int(11) DEFAULT NULL,
-  `Content` varchar(255) DEFAULT NULL,
-  `Education` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`ResumeID`)
+Create table IF NOT exists `pt_resume` (
+  `resumeID` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  `sex` varchar(20) DEFAULT NULL,
+  `resumeImage` varchar(255) DEFAULT NULL,
+  `age` int(11) DEFAULT NULL,
+  `content` varchar(255) DEFAULT NULL,
+  `education` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`resumeID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -93,40 +96,65 @@ CREATE TABLE IF NOT EXISTS `pt_resume` (
 -- 表的结构 `pt_user`
 --
 
-CREATE TABLE IF NOT EXISTS `pt_user` (
-  `UserID` int(20) NOT NULL AUTO_INCREMENT,
-  `PassWord` varchar(20) NOT NULL,
-  `Email` varchar(100) NOT NULL,
-  `UserName` varchar(100) NOT NULL,
-  `Address` varchar(255) NOT NULL,
-  `Sex` varchar(20) NOT NULL,
-  `Telephone` int(20) NOT NULL,
-  `UserNumber` int(20) NOT NULL,
-  `ResumeID` int(20) NOT NULL,
-  PRIMARY KEY (`UserID`)
+Create table IF NOT exists `pt_user` (
+  `userID` int(20) NOT NULL AUTO_INCREMENT,
+  `password` varchar(20) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `userName` varchar(100) NOT NULL,
+  `address` varchar(255) NOT NULL,
+  `sex` varchar(20) NOT NULL,
+  `telephone` int(20) NOT NULL,
+  `userNumber` int(20) NOT NULL,
+  `userImage` varchar(255) DEFAULT NULL,
+  `resumeID` int(20) NOT NULL,
+  PRIMARY KEY (`userID`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `pt_news`
+--
+
+Create table IF NOT exists `pt_news` (
+  `newsID` int(11) NOT NULL AUTO_INCREMENT,
+  `author` varchar(50) NOT NULL,
+  `title` varchar(100) NOT NULL,
+  `content` varchar(255) DEFAULT NULL,
+  `publishtime` varchar(50) DEFAULT NULL,
+  `confirmtime` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`newsID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
 
 --
 -- 转存表中的数据 `pt_user`
 --
 
-INSERT INTO `pt_user` (`UserID`, `PassWord`, `Email`, `UserName`, `Address`, `Sex`, `Telephone`, `UserNumber`, `ResumeID`) VALUES
+
+INSERT INTO `pt_news` (`newsID`, `author`, `title`, `content`, `publishtime`, `confirmtime`) VALUES
+(1, 'qwe', 'asd', 'qwe', 'qwe', 'qwe');
+INSERT INTO `pt_news` (`newsID`, `author`, `title`, `content`, `publishtime`, `confirmtime`) VALUES
+(2, 'hello', 'test', 'test', '12', '23');
+
+INSERT INTO `pt_user` (`userID`, `password`, `email`, `userName`, `address`, `sex`, `telephone`, `userNumber`, `resumeID`) VALUES
 (1, 'qwe', 'asd', 'qwe', 'qwe', 'qwe', 0, 0, 0);
-INSERT INTO `pt_user` (`UserID`, `PassWord`, `Email`, `UserName`, `Address`, `Sex`, `Telephone`, `UserNumber`, `ResumeID`) VALUES
+INSERT INTO `pt_user` (`userID`, `password`, `email`, `userName`, `address`, `sex`, `telephone`, `userNumber`, `resumeID`) VALUES
 (2, 'a', 'a', 'a', 'a', 'man', 10, 10, 0);
-INSERT INTO `pt_user` (`UserID`, `PassWord`, `Email`, `UserName`, `Address`, `Sex`, `Telephone`, `UserNumber`, `ResumeID`) VALUES
+INSERT INTO `pt_user` (`userID`, `password`, `email`, `userName`, `address`, `sex`, `telephone`, `userNumber`, `resumeID`) VALUES
 (3, 'b', 'b', 'b', 'b', 'woman', 11, 11, 0);
-INSERT INTO `pt_user` (`UserID`, `PassWord`, `Email`, `UserName`, `Address`, `Sex`, `Telephone`, `UserNumber`, `ResumeID`) VALUES
+INSERT INTO `pt_user` (`userID`, `password`, `email`, `userName`, `address`, `sex`, `telephone`, `userNumber`, `resumeID`) VALUES
 (4, 'c', 'c', 'c', 'c', 'man', 12, 12, 0);
 
-INSERT INTO `pt_admin` (`AdminID`, `PassWord`, `Email`, `AdminName`, `Sex`, `Telephone`, `AdminNumber`) VALUES
+INSERT INTO `pt_admin` (`adminID`, `password`, `email`, `adminName`, `sex`, `telephone`, `adminNumber`) VALUES
 (1, 'c', 'c', 'c', 'man', 12, 1);
-INSERT INTO `pt_admin` (`AdminID`, `PassWord`, `Email`, `AdminName`, `Sex`, `Telephone`, `AdminNumber`) VALUES
+INSERT INTO `pt_admin` (`adminID`, `password`, `email`, `adminName`, `sex`, `telephone`, `adminNumber`) VALUES
 (2, 'a', 'a', 'a', 'man', 12, 2);
-INSERT INTO `pt_admin` (`AdminID`, `PassWord`, `Email`, `AdminName`, `Sex`, `Telephone`, `AdminNumber`) VALUES
+INSERT INTO `pt_admin` (`adminID`, `password`, `email`, `adminName`, `sex`, `telephone`, `adminNumber`) VALUES
 (3, 'g', 'g', 'g', 'man', 12, 3);
 
-INSERT INTO `pt_company` (`CompanyID`, `PassWord`, `Email`, `CompanyName`, `Address`, `Telephone`, `CompanyNumber`, `InfoID`) VALUES
+INSERT INTO `pt_company` (`CompanyID`, `password`, `email`, `CompanyName`, `address`, `telephone`, `CompanyNumber`, `infoID`) VALUES
 (1, 'a', 'a', 'a', 'a', '123', 10,0);
-INSERT INTO `pt_company` (`CompanyID`, `PassWord`, `Email`, `CompanyName`, `Address`, `Telephone`, `CompanyNumber`, `InfoID`) VALUES
+INSERT INTO `pt_company` (`CompanyID`, `password`, `email`, `CompanyName`, `address`, `telephone`, `CompanyNumber`, `infoID`) VALUES
 (2, 'd', 'd', 'd', 'd', '13423', 1240,0);

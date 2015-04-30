@@ -53,23 +53,19 @@
 <div region="west" style="width: 200px" title="导航菜单" split="true">
 <div class="easyui-accordion" data-options="fit:true,border:false">
 		<div title="人员管理" data-options="selected:true,iconCls:'icon-user'" style="padding: 10px">
+			<a href="javascript:openTab('权限管理','../member/user_message.php','icon-user')" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-manage'" style="width: 150px;">权限管理</a>
 			<a href="javascript:openTab('用户信息','../member/user_message.php','icon-user')" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-manage'" style="width: 150px;">用户信息</a>
 			<a href="javascript:openTab('企业信息','../member/company_message.php','icon-user')" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-manage'" style="width: 150px;">企业信息</a>
 			<a href="javascript:openTab('管理员信息','../member/admin_message.php','icon-user')" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-manage'" style="width: 150px;">管理员信息</a>
 		</div>
 		<div title="信息管理" data-options="iconCls:'icon-comment'" style="padding:10px">
-			<a href="" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-manage'" style="width: 150px;">新闻动态</a>
-			<a href="" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-manage'" style="width: 150px;">公告</a>
+			<a href="javascript:openTab('新闻动态','../news/news.php','icon-user')" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-manage'" style="width: 150px;">新闻动态</a>
 		</div>
 		<div title="兼职信息管理" data-options="iconCls:'icon-comment'" style="padding:10px">
-			<a href="" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-manage'" style="width: 150px;">类别管理</a>
-			<a href="" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-manage'" style="width: 150px;">简历</a>
-			<a href="" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-manage'" style="width: 150px;">兼职信息</a>
+			<a href="javascript:openTab('类别管理','../partInfo/category.php','icon-user')" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-manage'" style="width: 150px;">类别管理</a>
+			<a href="javascript:openTab('简历管理','../partInfo/resume.php','icon-user')" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-manage'" style="width: 150px;">简历管理</a>
+			<a href="javascript:openTab('兼职信息','../partInfo/information.php','icon-user')" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-manage'" style="width: 150px;">兼职信息</a>
 		</div>
-		<div title="图片管理" data-options="iconCls:'icon-comment'" style="padding:10px">
-			<a href="" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-manage'" style="width: 150px;">轮播图</a>
-			<a href="" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-manage'" style="width: 150px;">广告</a>
-		</div>	
 	</div>
 </div>
 

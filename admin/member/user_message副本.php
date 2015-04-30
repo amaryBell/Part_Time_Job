@@ -11,92 +11,104 @@
 	<script type="text/javascript" >
 	 var url;
         var type;
-        function newUser() {
+        function newuser() {
             $("#dlg").dialog("open").dialog('setTitle', '新建信息'); 
             $("#fm").form("clear");
             url = "new_user.php";
             document.getElementById("hidtype").value="submit";
         }
-        function editUser() {
-            var row = $("#dg").datagrid("getSelected");
-            if (row) {
-                $("#dlg").dialog("open").dialog('setTitle', '编辑信息');
-                $("#fm").form("load", row);
-                url = "edit_user.php?userID=" + row.userID;
-            }
-        }
-        function saveUser() {
-            $("#fm").form("submit", {
-                url: url,
-                onsubmit: function () {
-                    return $(this).form("validate");
-                },
-                // success: function (result) {
-                    // if (result == "1") {
-                        // $.messager.alert("提示信息", "操作成功");
-						// location.reload(url);
-                       // $("#dlg").dialog("close");
-                       // $("#dg").datagrid("load");
-                    // }
-                   // else {
-                       // $.messager.alert("提示信息", "操作失败");
-                   // }
-                // }
-				success: function () {
-				   $.messager.alert("提示信息", "操作成功");
-				   $('#dlg').dialog("close");
-				   $('#dg').datagrid("reload");
-				   location.reload(url);				   
-                }
-				
-            });
-        }
-        // function deleteUser() {
-            // var row = $('#dg').datagrid('getSelected');
-            // if (row) {
-                // $.messager.confirm('删除信息', '您确定要删除信息吗?', function (r) {
-                    // if (r) {
-                        // $.post('detete_user.php', { id: row.userID }, function (result) {
-                            // if (result.success) {
-                                // $('#dg').datagrid('reload');    // reload the user data  
-                            // } else {
-                                // $.messager.show({   // show error message  
-                                    // title: 'Error',
-                                    // msg: result.errorMsg
-                                // });
-                            // }
-                        // }, 'json');
-                    // }
-                // });
-            // }
-        // }  
-		
-		
-		function deleteUser(){
-		var selectedRows=$("#dg").datagrid('getSelections');
-		if(selectedRows.length==0){
-			$.messager.alert("系统提示","请选择要删除的数据！");
+
+        function edituser(){
+		var selectedRows=$("#dg").datagrid('getSelections');  
+		if(selectedRows.length!=1){
+			$.messager.alert("系统提示","请选择一条要编辑的数据！");
 			return;
 		}
-		
-		var strIds=[];
-		for(var i=0;i<selectedRows.length;i++){
-			strIds.push(selectedRows[i].userID);
-		}
-		var ids=strIds.join(",");
-		$.messager.confirm("系统提示","您确认要删掉这<font color=red>"+selectedRows.length+"</font>条数据吗？",function(r){
-			if(r){
-				$.post("delete_user.php",{ids:ids},function(result){
-					if(result.success){
-						$.messager.alert("系统提示","数据已成功删除！");
-						$("#dg").datagrid("reload");
-					}else{
-						$.messager.alert('系统提示',result.errorMsg);
-					}
-				},"json");
+		var row=selectedRows[0];
+		$("#dlg").dialog("open").dialog("setTitle","编辑用户信息");
+		$("#userName").val(row.userName);
+		$("#password").val(row.password);
+		$("#sex").val(row.sex);
+		$("#email").val(row.email);
+		$("#address").val(row.address);
+		$("#telephone").val(row.telephone);
+		$("#userNumber").val(row.userNumber);
+		$("#userImage").val(row.userImage);
+		$("#hide").hide();
+		url="User_update?userName="+row.userName;
+	}
+function saveuser(){
+		$("#fm").form("submit",{
+			url:url,
+			onSubmit:function(){
+				return $(this).form("validate");
+			},
+			success:function(result){
+				if(result){
+					$.messager.confirm("系统提示","保存成功,是否刷新页面？",function(r){
+						if(r){
+							//resetValue();
+							$("#dlg").dialog("close");
+							location.reload("user_massage.php");
+						}
+					});
+				}else{
+					$.messager.alert("系统提示","保存失败");
+					return;
+				}
 			}
 		});
 	}
+        function deleteuser() {
+            //var row = $('#dg').datagrid('getSelected');
+			var selectedRows=$("#dg").datagrid('getSelections');
+			if(selectedRows.length==0){
+			$.messager.alert("系统提示","请选择要删除的数据！");
+			return;
+			}
+            if (row) {
+                $.messager.confirm('删除信息', '您确定要删除信息吗?', function (r) {
+                    if (r) {
+                        $.post('detete_user.php', { userID: row.userID }, function (result) {
+                            if (result.success) {
+                                $('#dg').datagrid('reload');    // reload the user data  
+                            } else {
+                                $.messager.show({   // show error message  
+                                    title: 'Error',
+                                    msg: result.errorMsg
+                                });
+                            }
+                        }, 'json');
+                    }
+                });
+            }
+        }  
+		
+		
+		// function deleteUser(){
+		// var selectedRows=$("#dg").datagrid('getSelections');
+		// if(selectedRows.length==0){
+			// $.messager.alert("系统提示","请选择要删除的数据！");
+			// return;
+		// }
+		// var strIds=[];
+		// for(var i=0;i<selectedRows.length;i++){
+			// strIds.push(selectedRows[i].userID);
+		// }
+		// var ids=strIds.join(",");
+		// $.messager.confirm("系统提示","您确认要删掉这<font color=red>"+selectedRows.length+"</font>条数据吗？",function(r){
+			// if(r){
+				// $.post("delete_user.php",{ids:ids},function(result){
+					// if(result.success){
+						// $.messager.alert("系统提示","数据已成功删除！");
+						// $("#dg").datagrid("reload");
+					// }else{
+						// $.messager.alert('系统提示',result.errorMsg);
+					// }
+				// },"json");
+			// }
+		// });
+	// }
 	</script>
 
 </head>
@@ -124,13 +136,12 @@
         url="#" toolbar="#toolbar" pagination="true" rownumbers="true"
         fitcolumns="true" singleselect="true">
 		<div id="toolbar">
-			<a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-add" onclick="newUser()" plain="true">添加</a> 
-			<a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-edit" onclick="editUser()" plain="true">修改</a> 
-			<a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-remove"  onclick="deleteUser()" plain="true">删除</a>
+			<a href="javascript:newuser()" class="easyui-linkbutton" iconcls="icon-add" plain="true">添加</a> 
+			<a href="javascript:edituser()" class="easyui-linkbutton" iconcls="icon-edit" plain="true">修改</a> 
+			<a href="javascript:deleteuser()" class="easyui-linkbutton" iconcls="icon-remove" plain="true">删除</a>
 		</div>
 	<thead>
 		<tr>
-			<th field="ck" checkbox="true"></th>
 			<th field="userID" width="70">编号</th>
 			<th field="userName" width="70">姓名</th>
 			<th field="password" width="70">密码</th>

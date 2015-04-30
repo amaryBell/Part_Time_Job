@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="GBK">
-	<title>Test</title>
+	<title>企业管理界面</title>
 	<link rel="stylesheet" type="text/css" href="../jquery-easyui-1.3.5/themes/default/easyui.css">
 	<link rel="stylesheet" type="text/css" href="../jquery-easyui-1.3.5/themes/icon.css">
 	<link rel="stylesheet" type="text/css" href="../jquery-easyui-1.3.5/demo/demo.css">
@@ -77,6 +77,7 @@
 	 }
 	/* 这就是一个逻辑非判断，如果错误就输出括号里的字符串 */ 
 	@mysql_select_db("part_time", $con); 
+	mysql_query("set names GBK");
 	/* 选择mysql服务器里的一pt_user"; 
 	/* 定义变量sql, "SELECT * FROM qq" 是SQL指令，表示选取表qq中的数据 */ 
 	$sql = "SELECT * FROM pt_company";
@@ -85,7 +86,7 @@
 
 
 
-<table id="dg" title="用户信息管理" class="easyui-datagrid" style="width:auto;height:auto"
+<table id="dg" title="企业信息管理" class="easyui-datagrid" style="width:auto;height:auto"
         url="#" toolbar="#toolbar" pagination="true" rownumbers="true"
         fitcolumns="true" singleselect="true">
 		<div id="toolbar">
@@ -96,12 +97,13 @@
 		</div>
 	<thead>
 		<tr>
-			<th field="CompanyName" width="70">姓名</th>
-			<th field="PassWord" width="70">密码</th>
-			<th field="Email" width="70">邮箱</th>
-			<th field="Address" width="70">地址</th>
-			<th field="Telephone" width="70">电话</th>
-			<th field="CompanyNumber" width="70">帐号</th>
+			<th field="companyName" width="70">姓名</th>
+			<th field="password" width="70">密码</th>
+			<th field="email" width="70">邮箱</th>
+			<th field="address" width="70">地址</th>
+			<th field="telephone" width="70">电话</th>
+			<th field="companyNumber" width="70">帐号</th>
+			<th field="companyImage" width="70">照片</th>
 		</tr>
 	</thead>
 	
@@ -112,12 +114,13 @@
 	/*逐行获取结果集中的记录，得到数组row */
 	{  
 		/*数组row的下标对应着数据库中的字段值 */
-		$name = $row['CompanyName']; 
-		$psw = $row['PassWord']; 
-		$email = $row['Email']; 
-		$addr = $row['Address']; 
-		$telephone = $row['Telephone']; 
-		$comnb = $row['CompanyNumber']; 
+		$name = $row['companyName']; 
+		$psw = $row['password']; 
+		$email = $row['email']; 
+		$addr = $row['address']; 
+		$telephone = $row['telephone']; 
+		$comnb = $row['companyNumber']; 
+		$comimg = $row['companyImage'];
 		
 		echo "<tr>"; 
 		echo "<td>$name</td>"; 
@@ -126,6 +129,7 @@
 		echo "<td>$addr</td>"; 
 		echo "<td>$telephone</td>"; 
 		echo "<td>$comnb</td>";
+		echo "<td>$comimg</td>";
 		echo "</tr>"; 
 	} 
 	?>
@@ -138,39 +142,39 @@
        <form id="fm" method="post"  align="center" > 
        <div class="fitem"> 
            <label> 
-               姓名 
+               公司名 
            </label> 
-           <input name="AccountCode" class="easyui-validatebox" required="true" /> 
+           <input name="companyName" class="easyui-validatebox" required="true" /> 
        </div> 
        <div class="fitem"> 
            <label> 
                密码</label> 
-           <input name="AccountName" class="easyui-validatebox" required="true" /> 
-       </div> 
-       <div class="fitem"> 
-           <label> 
-               性别</label> 
-           <input name="AccountPwd" class="easyui-validatebox" /> 
+           <input name="password" class="easyui-validatebox" required="true" /> 
        </div> 
        <div class="fitem"> 
            <label> 
                邮箱</label> 
-           <input name="CreateTime" class="easyui-vlidatebox" required="true" /> 
+           <input name="email" class="easyui-vlidatebox" required="true" /> 
        </div> 
        <div class="fitem"> 
            <label> 
-               电话</label> 
-           <input name="CreateName" class="easyui-vlidatebox" /> 
+               地址</label> 
+           <input name="address" class="easyui-vlidatebox" /> 
        </div>
 		<div class="fitem"> 
            <label> 
-               邮箱</label> 
-           <input name="CreateTime" class="easyui-vlidatebox" /> 
+               电话</label> 
+           <input name="telephone" class="easyui-vlidatebox" /> 
        </div> 
        <div class="fitem"> 
            <label> 
                帐号</label> 
-           <input name="CreateName" class="easyui-vlidatebox" /> 
+           <input name="companyNumber" class="easyui-vlidatebox" /> 
+       </div>	
+		<div class="fitem"> 
+           <label> 
+               照片</label> 
+           <input name="companyNumber" class="easyui-vlidatebox" /> 
        </div>	   
        <input type="hidden" name="action" id="hidtype" /> 
        <input type="hidden" name="ID" id="Nameid" /> 
