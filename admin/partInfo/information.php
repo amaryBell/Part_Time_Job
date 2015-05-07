@@ -101,6 +101,7 @@
 		</div>
 	<thead>
 		<tr>
+			<th field="ck" checkbox="true"></th>
 			<th field="author" width="70">作者</th>
 			<th field="title" width="70">标题</th>
 			<th field="content" width="70">内容</th>

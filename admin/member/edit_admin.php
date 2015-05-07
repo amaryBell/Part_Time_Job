@@ -9,17 +9,20 @@
 	 }
 	@mysql_select_db("part_time", $con); 
 	mysql_query("set names GBK");
-	$name = $_POST['userName'];
+	$id = $_POST['adminID'];
+	$name = $_POST['adminName'];
 	$psw= $_POST['password'];	
 	$sex =  $_POST['sex']; 
 	$email =  $_POST['email']; 
-	$addr = $_POST['address']; 
 	$telephone = $_POST['telephone']; 
-	$usernb =  $_POST['userNumber']; 
-	$userimg = $_POST['userImage'];
-	$sql = "insert into pt_user(userName,password,sex,email,address,telephone,userNumber,userImage) values ('$name','$psw','$sex','$email','$addr','$telephone','$usernb','$userimg')";
+	$adminnb =  $_POST['adminNumber']; 
+	$adminimg = $_POST['adminImage'];
+	$sql = "update pt_admin set adminName='$name',password='$psw',sex='$sex',email='$email',telephone='$telephone',adminNumber='$adminnb',adminImage='$adminimg' where adminID=$id";
+	var_dump($sql);
+	//exit();
+	
 	mysql_query($sql);
-	$sql1 = "SELECT * FROM pt_user";
+	$sql1 = "SELECT * FROM pt_admin";
 	$result = mysql_query($sql1); //执行SQL语句，获得结果集 
 	mysql_close($con);
 	?>

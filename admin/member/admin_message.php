@@ -11,57 +11,73 @@
 	<script type="text/javascript" >
 	 var url;
         var type;
-        function newuser() {
+        function newAdmin() {
             $("#dlg").dialog("open").dialog('setTitle', '新建信息'); 
             $("#fm").form("clear");
-            url = "UserMessage.php";
+            url = "new_admin.php";
             document.getElementById("hidtype").value="submit";
         }
-        function edituser() {
+        function editAdmin() {
             var row = $("#dg").datagrid("getSelected");
+			
             if (row) {
                 $("#dlg").dialog("open").dialog('setTitle', '编辑信息');
+				
                 $("#fm").form("load", row);
-                url = "UserMessage.php?id=" + row.UserID;
+                var url = "edit_admin.php?id=" + row.adminID;
+				
+				$("#fm").form("submit", {
+                url: url,
+                onsubmit: function () {
+                    return $(this).form("validate");
+                },
+				success: function () {	   
+                }
+				
+            });
+				console.log(url);
             }
         }
-        function saveuser() {
+        function saveAdmin() {
             $("#fm").form("submit", {
                 url: url,
                 onsubmit: function () {
                     return $(this).form("validate");
                 },
-                success: function (result) {
-                    if (result == "1") {
-                        $.messager.alert("提示信息", "操作成功");
-                        $("#dlg").dialog("close");
-                        $("#dg").datagrid("load");
-                    }
-                    else {
-                        $.messager.alert("提示信息", "操作失败");
-                    }
+				success: function () {
+				   location.reload(url);				   
                 }
             });
         }
-        function destroyUser() {
-            var row = $('#dg').datagrid('getSelected');
-            if (row) {
-                $.messager.confirm('删除信息', '您确定要删除信息吗?', function (r) {
-                    if (r) {
-                        $.post('destroy_user.php', { id: row.UserID }, function (result) {
-                            if (result.success) {
-                                $('#dg').datagrid('reload');    // reload the user data  
-                            } else {
-                                $.messager.show({   // show error message  
-                                    title: 'Error',
-                                    msg: result.errorMsg
-                                });
-                            }
-                        }, 'json');
-                    }
-                });
-            }
-        }
+		
+ 		function deleteAdmin(){
+		var url = "delete_admin.php";
+		var selectedRows=$("#dg").datagrid('getSelections');
+		if(selectedRows.length==0){
+			$.messager.alert("系统提示","请选择要删除的数据！");
+			return;
+		}
+		var strIds=[];
+		for(var i=0;i<selectedRows.length;i++){
+			strIds.push(selectedRows[i].userID);
+		}
+		var ids=strIds.join(",");
+		$.messager.confirm("系统提示","您确认要删掉这<font color=red>"+selectedRows.length+"</font>条数据吗？",function(r){
+			if(r){
+				$.post("delete_admin.php",{ids:ids},function(result){
+					if(result.success){
+						$.messager.alert("系统提示","数据已成功删除！");
+						$("#dg").datagrid("reload");
+					}else{
+						$.messager.alert('系统提示',result.errorMsg);
+					}
+						
+				},"json");
+				location.reload(url);
+			}
+			
+		});
+	}
 	</script>
 
 </head>
@@ -90,13 +106,14 @@
         url="#" toolbar="#toolbar" pagination="true" rownumbers="true"
         fitcolumns="true" singleselect="true">
 		<div id="toolbar">
-			<a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-add" onclick="newuser()"
+			<a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-add" onclick="newAdmin()"
 				plain="true">添加</a> <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-edit"
-                onclick="edituser()" plain="true">修改</a> <a href="javascript:void(0)" class="easyui-linkbutton"
-                iconcls="icon-remove"  onclick="destroyUser()" plain="true">删除</a>
+                onclick="editAdmin()" plain="true">修改</a> <a href="javascript:void(0)" class="easyui-linkbutton"
+                iconcls="icon-remove"  onclick="deleteAdmin()" plain="true">删除</a>
 		</div>
 	<thead>
 		<tr>
+			<th field="ck" checkbox="true"></th>
 			<th field="adminName" width="70">姓名</th>
 			<th field="password" width="70">密码</th>
 			<th field="sex" width="70">性别</th>
@@ -114,6 +131,7 @@
 	/*逐行获取结果集中的记录，得到数组row */
 	{  
 		/*数组row的下标对应着数据库中的字段值 */
+		
 		$name = $row['adminName']; 
 		$psw = $row['password']; 
 		$sex = $row['sex']; 
@@ -123,6 +141,7 @@
 		$adminimg = $row['adminImage']; 
 		
 		echo "<tr>"; 
+		echo "<td></td>"; 
 		echo "<td>$name</td>"; 
 		echo "<td>$psw</td>"; 
 		echo "<td>$sex</td>"; 
@@ -139,54 +158,50 @@
 <div id="dlg" class="easyui-dialog" style="width: 300px; height: 280px; padding: 10px 20px;"
        closed="true" buttons="#dlg-buttons"> 
 
-       <form id="fm" method="post"  align="center" > 
+        <form id="fm" method="post"  align="center" >
+		<input name="userID" type="hidden">
        <div class="fitem"> 
            <label> 
                姓名 
            </label> 
-           <input name="AccountCode" class="easyui-validatebox" required="true" /> 
+           <input name="adminName" class="easyui-validatebox" required="true" /> 
        </div> 
        <div class="fitem"> 
            <label> 
                密码</label> 
-           <input name="AccountName" class="easyui-validatebox" required="true" /> 
+           <input name="password" class="easyui-validatebox" required="true" /> 
        </div> 
        <div class="fitem"> 
            <label> 
                性别</label> 
-           <input name="AccountPwd" class="easyui-validatebox" /> 
+           <input name="sex" class="easyui-validatebox" /> 
        </div> 
        <div class="fitem"> 
            <label> 
                邮箱</label> 
-           <input name="CreateTime" class="easyui-vlidatebox" required="true" /> 
+           <input name="email" class="easyui-vlidatebox" required="true" /> 
        </div> 
-       <div class="fitem"> 
-           <label> 
-               电话</label> 
-           <input name="CreateName" class="easyui-vlidatebox" /> 
-       </div>
 		<div class="fitem"> 
            <label> 
-               邮箱</label> 
-           <input name="CreateTime" class="easyui-vlidatebox" /> 
-       </div> 
+               电话</label> 
+           <input name="telephone" class="easyui-vlidatebox" /> 
+       </div>
        <div class="fitem"> 
            <label> 
                帐号</label> 
-           <input name="CreateName" class="easyui-vlidatebox" /> 
+           <input name="adminNumber" class="easyui-vlidatebox" /> 
        </div>
 		<div class="fitem"> 
            <label> 
                照片</label> 
-           <input name="companyNumber" class="easyui-vlidatebox" /> 
-       </div>	   
+           <input name="adminImage" class="easyui-vlidatebox" /> 
+       </div>
        <input type="hidden" name="action" id="hidtype" /> 
        <input type="hidden" name="ID" id="Nameid" /> 
        </form> 
    </div>
 <div id="dlg-buttons"> 
-        <a href="javascript:void(0)" class="easyui-linkbutton" onclick="saveuser()" iconcls="icon-save">保存</a> 
+        <a href="javascript:void(0)" class="easyui-linkbutton" onclick="saveAdmin()" iconcls="icon-save">保存</a> 
         <a href="javascript:void(0)" class="easyui-linkbutton" onclick="javascript:$('#dlg').dialog('close')"
             iconcls="icon-cancel">取消</a> 
     </div> 

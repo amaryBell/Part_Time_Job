@@ -11,74 +11,52 @@
 	<script type="text/javascript" >
 	 var url;
         var type;
-        function newUser() {
+        function newuser() {
             $("#dlg").dialog("open").dialog('setTitle', '新建信息'); 
             $("#fm").form("clear");
             url = "new_user.php";
             document.getElementById("hidtype").value="submit";
         }
-        function editUser() {
+        function edituser() {
             var row = $("#dg").datagrid("getSelected");
+			
             if (row) {
                 $("#dlg").dialog("open").dialog('setTitle', '编辑信息');
+				
                 $("#fm").form("load", row);
-                url = "edit_user.php?userID=" + row.userID;
+                var url = "edit_user.php?id=" + row.userID;
+				
+				$("#fm").form("submit", {
+                url: url,
+                onsubmit: function () {
+                    return $(this).form("validate");
+                },
+				success: function () {	   
+                }
+				
+            });
+				console.log(url);
             }
         }
-        function saveUser() {
+        function saveuser() {
             $("#fm").form("submit", {
                 url: url,
                 onsubmit: function () {
                     return $(this).form("validate");
                 },
-                // success: function (result) {
-                    // if (result == "1") {
-                        // $.messager.alert("提示信息", "操作成功");
-						// location.reload(url);
-                       // $("#dlg").dialog("close");
-                       // $("#dg").datagrid("load");
-                    // }
-                   // else {
-                       // $.messager.alert("提示信息", "操作失败");
-                   // }
-                // }
 				success: function () {
-				   $.messager.alert("提示信息", "操作成功");
-				   $('#dlg').dialog("close");
-				   $('#dg').datagrid("reload");
 				   location.reload(url);				   
                 }
-				
             });
         }
-        // function deleteUser() {
-            // var row = $('#dg').datagrid('getSelected');
-            // if (row) {
-                // $.messager.confirm('删除信息', '您确定要删除信息吗?', function (r) {
-                    // if (r) {
-                        // $.post('detete_user.php', { id: row.userID }, function (result) {
-                            // if (result.success) {
-                                // $('#dg').datagrid('reload');    // reload the user data  
-                            // } else {
-                                // $.messager.show({   // show error message  
-                                    // title: 'Error',
-                                    // msg: result.errorMsg
-                                // });
-                            // }
-                        // }, 'json');
-                    // }
-                // });
-            // }
-        // }  
 		
-		
-		function deleteUser(){
+ 		function deleteUser(){
+		var url = "delete_user.php";
 		var selectedRows=$("#dg").datagrid('getSelections');
 		if(selectedRows.length==0){
 			$.messager.alert("系统提示","请选择要删除的数据！");
 			return;
 		}
-		
 		var strIds=[];
 		for(var i=0;i<selectedRows.length;i++){
 			strIds.push(selectedRows[i].userID);
@@ -93,8 +71,11 @@
 					}else{
 						$.messager.alert('系统提示',result.errorMsg);
 					}
+						
 				},"json");
+				location.reload(url);
 			}
+			
 		});
 	}
 	</script>
@@ -124,8 +105,8 @@
         url="#" toolbar="#toolbar" pagination="true" rownumbers="true"
         fitcolumns="true" singleselect="true">
 		<div id="toolbar">
-			<a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-add" onclick="newUser()" plain="true">添加</a> 
-			<a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-edit" onclick="editUser()" plain="true">修改</a> 
+			<a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-add" onclick="newuser()" plain="true">添加</a> 
+			<a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-edit" onclick="edituser()" plain="true">修改</a> 
 			<a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-remove"  onclick="deleteUser()" plain="true">删除</a>
 		</div>
 	<thead>
@@ -159,7 +140,8 @@
 		$usernb = $row['userNumber'];
 		$userimg = $row['userImage'];		
 		
-		echo "<tr>"; 
+		echo "<tr>";
+		echo "<td></td>";
 		echo "<td>$id</td>";
 		echo "<td>$name</td>"; 
 		echo "<td>$psw</td>"; 
@@ -176,7 +158,8 @@
 <div id="dlg" class="easyui-dialog" style="width: 300px; height: 250px; padding: 10px 20px;"
        closed="true" buttons="#dlg-buttons"> 
 
-       <form id="fm" method="post"  align="center" > 
+       <form id="fm" method="post"  align="center" >
+		<input name="userID" type="hidden">
        <div class="fitem"> 
            <label> 
                姓名 

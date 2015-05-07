@@ -97,6 +97,7 @@
 		</div>
 	<thead>
 		<tr>
+			<th field="ck" checkbox="true"></th>
 			<th field="companyName" width="70">аеУћ</th>
 			<th field="password" width="70">УмТы</th>
 			<th field="email" width="70">гЪЯф</th>

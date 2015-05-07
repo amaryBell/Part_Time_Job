@@ -101,6 +101,7 @@
 		</div>
 	<thead>
 		<tr>
+			<th field="ck" checkbox="true"></th>
 			<th field="categoryName" width="70">类别名</th>
 			<th field="description" width="70">描述</th>
 		</tr>
@@ -113,11 +114,11 @@
 	{  
 		/*数组row的下标对应着数据库中的字段值 */
 		$name = $row['categoryName']; 
-		$desc = $row['description']; 
+		$description = $row['description']; 
 		
 		echo "<tr>"; 
 		echo "<td>$name</td>"; 
-		echo "<td>$desc</td>"; 
+		echo "<td>$description</td>"; 
 		echo "</tr>"; 
 	} 
 ?>
@@ -136,7 +137,7 @@
            <label> 
                描述
 		   </label> 
-           <input name="description" class="easyui-validatebox" required="true" /> 
+           <input name="description" class="easyui-validatebox" /> 
        </div> 
 
        <input type="hidden" name="action" id="hidtype" /> 

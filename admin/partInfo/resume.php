@@ -101,6 +101,7 @@
 		</div>
 	<thead>
 		<tr>
+			<th field="ck" checkbox="true"></th>
 			<th field="name" width="70">аеУћ</th>
 			<th field="sex" width="70">адБ№</th>
 			<th field="resumeImage" width="70">ееЦЌ</th>
